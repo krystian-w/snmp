@@ -8,18 +8,20 @@ namespace ZSK_Projekt.SMIParser
     {
         public MIBSequence(string Name, string Values)
         {
-            name = Name;  // name ::= SEQUENCE
-            string min = "-1";
-            string max = "-1";
-            //Console.WriteLine(Name);
+            name = Name;            // name ::= SEQUENCE
+            string min = "-1";      // Jeżeli brak to będzie -1
+            string max = "-1";      // Jeżeli brak to będzie -1
+
             RegexOptions options = RegexOptions.Singleline | RegexOptions.Multiline;
             string pattern_NameType = @"(?<name>\w*)\s*(?<type>\w*)(\,|(?<minmax>\s*\(\S*\)))+";
+
             foreach (Match m in Regex.Matches(Values, pattern_NameType, options))
             {
-                string _name = m.Groups[2].Value.Replace("\n", "");   // [2] Name
-                string _type = m.Groups[3].Value.Replace("\n", "");   // [3] Type
-                string pattern_minmax = @"\((?<min>\d*)..(?<max>\d*)\)";
+                string _name = m.Groups[2].Value.Replace("\n", "");   // Ustaw [2] Name
+                string _type = m.Groups[3].Value.Replace("\n", "");   // Ustaw [3] Type
 
+                // Jeżeli występuje min i max to ustaw wartości
+                string pattern_minmax = @"\((?<min>\d*)..(?<max>\d*)\)";
                 Match minmax = Regex.Match(m.Groups[4].Value.Replace("\n", ""), pattern_minmax, options); // [4] MinMax
                 if (minmax.Success == true)
                 {
@@ -27,19 +29,16 @@ namespace ZSK_Projekt.SMIParser
                     max = (minmax.Groups[2].Value);  // [2] - max
                     sequenceValues.Add(new SequenceValues(_name, _type, min, max));
                 }
+                // W przeciwnym wypadku zostaw -1 i -1
                 else
                 {
                     sequenceValues.Add(new SequenceValues(_name, _type, min, max));
                 }
             }
-            foreach (var value in sequenceValues)
-            {
-                Console.WriteLine("{0}\t{1}\t{2}\t{3}\n\n", value.name, value.type, value.min, value.max);
-            }
         }
 
-        public string name;
-        public List<SequenceValues> sequenceValues = new List<SequenceValues>();
+        public string name;     // nazwa sekwencji
+        public List<SequenceValues> sequenceValues = new List<SequenceValues>(); // elementy w sekwencji
     }
 
     public class SequenceValues
