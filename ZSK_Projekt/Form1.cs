@@ -23,48 +23,54 @@ namespace ZSK_Projekt
             foreach (var mib in MIBObjects)
             {
                 // Wykorzystanie mib.parent oraz mib.oID do określenia odpowiedniego oID
-
+                mib.oID = "123";
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             var parser = new Parser();
-            /*
-            system          OBJECT IDENTIFIER::= { mib - 2 1 }
-            interfaces      OBJECT IDENTIFIER::= { mib - 2 2 }
-            at              OBJECT IDENTIFIER::= { mib - 2 3 }
-            ip              OBJECT IDENTIFIER::= { mib - 2 4 }
-            icmp            OBJECT IDENTIFIER::= { mib - 2 5 }
-            tcp             OBJECT IDENTIFIER::= { mib - 2 6 }
-            udp             OBJECT IDENTIFIER::= { mib - 2 7 }
-            egp             OBJECT IDENTIFIER::= { mib - 2 8 }
-            cmot            OBJECT IDENTIFIER::= { mib - 2 9 }
-            transmission    OBJECT IDENTIFIER::= { mib - 2 10 }
-            snmp            OBJECT IDENTIFIER::= { mib - 2 11 }
-            */      
 
-            List<string> ObjectList = new List<string>() { "system", "interfaces", "at", "ip", "icmp", "tcp", "udp", "egp", "cmot", "transmission", "snmp" };
-            foreach (var _object in ObjectList)
+            //List<string> ObjectList = new List<string>() { "system", "interfaces", "at", "ip", "icmp", "tcp", "udp", "egp", "cmot", "transmission", "snmp" };
+            // Lista OBJECT IDENTIFIER:
+            List<string> ObjecIdentifiertList = new List<string>();
+            parser.CreateOIList(ref ObjecIdentifiertList);
+
+            foreach (var _object in ObjecIdentifiertList)
             {
                 List<TreeNode> list = new List<TreeNode>();                     // Utwórz listę
                 parser.CreateSMITreeView(ref list, _object);                    // Szukaj elementy, które mają "_object" ustawiony jako parent
                 TreeNode[] array = list.ToArray();                              // Zmień listę w tablicę
                 TreeNode TreeNodeSystem = new TreeNode(_object, array);         
                 treeView1.Nodes.Add(TreeNodeSystem);
-                foreach (var name in array)                                     // Wyświetlanie szczegółów dotyczących danego OBJECT-TYPE (Syntax, Access itp.)
-                {
-                    List<TreeNode> list_details = new List<TreeNode>();
-                    parser.CreateSMITreeViewDetails(ref list_details, name.Text);
-                    TreeNode[] tempArray = list_details.ToArray();
-                    TreeNode temp = new TreeNode(name.Text, tempArray);
-                    foreach (var detail in tempArray)
-                    {
-                        name.Nodes.Add(detail.Text);
-                    }
-                }
             }
-          
+        }
+
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            try
+            {
+                txtName.Text = "";
+                txtOID.Text = "";
+                txtSyntax.Text = "";
+                txtAccess.Text = "";
+                txtStatus.Text = "";
+                txtMin.Text = "";
+                txtMax.Text = "";
+
+                var parser = new Parser();
+                // name ; oid ; syntax ; access ; status ; min ; max
+                txtName.Text = parser.displayText(treeView1.SelectedNode.Text.ToString(),"name");
+                txtOID.Text = parser.displayText(treeView1.SelectedNode.Text.ToString(),"oid");
+                txtSyntax.Text = parser.displayText(treeView1.SelectedNode.Text.ToString(), "syntax");
+                txtAccess.Text = parser.displayText(treeView1.SelectedNode.Text.ToString(), "access");
+                txtStatus.Text = parser.displayText(treeView1.SelectedNode.Text.ToString(), "status");
+                txtMin.Text = (Int32.Parse(parser.displayText(treeView1.SelectedNode.Text, "min")) == -1) ? "" : parser.displayText(treeView1.SelectedNode.Text.ToString(), "min");
+                txtMax.Text = (Int32.Parse(parser.displayText(treeView1.SelectedNode.Text, "max")) == -1) ? "" : parser.displayText(treeView1.SelectedNode.Text.ToString(), "max");
+            }
+            catch { }
+
         }
     }
 }
