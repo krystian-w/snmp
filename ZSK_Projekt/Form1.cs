@@ -46,6 +46,7 @@ namespace ZSK_Projekt
             }
         }
 
+        Parser parser = new Parser();
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -59,7 +60,7 @@ namespace ZSK_Projekt
                 txtMin.Text = "";
                 txtMax.Text = "";
 
-                var parser = new Parser();
+                
                 // name ; oid ; syntax ; access ; status ; min ; max
                 txtName.Text = parser.displayText(treeView1.SelectedNode.Text.ToString(),"name");
                 txtOID.Text = parser.displayText(treeView1.SelectedNode.Text.ToString(),"oid");
@@ -71,6 +72,14 @@ namespace ZSK_Projekt
             }
             catch { }
 
+        }
+
+        private void btnEncode_Click(object sender, EventArgs e)
+        {
+            ASN1Type ANS1Integer = ASN1Type.Integer;
+            int value = (int)ANS1Integer;
+            txtBer.Text = string.Format("{0:x}", value);
+            //txtBer.Text = string.Format("{0:x}", Int32.Parse(txtBerSyntax.Text));
         }
     }
 }

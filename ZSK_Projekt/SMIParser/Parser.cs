@@ -26,16 +26,18 @@ namespace ZSK_Projekt.SMIParser
         {
             RegexOptions options = RegexOptions.Multiline | RegexOptions.Singleline;
             // Regex: OBJECT-TYPE (name,syntax,access,status,description,parent,oid)
-            string pattern_ObjectType = @"(?<name>\w*)\s*OBJECT-TYPE\s*SYNTAX\s*(?<syntax>.*?)ACCESS\s*(?<access>.*?)STATUS\s*(?<status>.*?)DESCRIPTION\s*\""(?<description>.*?)\""?\s*::=\s*[{]\s*(?<parent>.*?)\s*(?=\d)(?<id>.*?)\s*[}]";
+            //string pattern_ObjectType = @"(?<name>\w*)\s*OBJECT-TYPE\s*SYNTAX\s*(?<syntax>.*?)ACCESS\s*(?<access>.*?)STATUS\s*(?<status>.*?)DESCRIPTION\s*\""(?<description>.*?)\""?\s*::=\s*[{]\s*(?<parent>.*?)\s*(?=\d)(?<id>.*?)\s*[}]";
+            string pattern_ObjectType = @"(?<name>\w*)\s*OBJECT-TYPE\s*SYNTAX\s*(?<syntax>.*?)\s*ACCESS\s*(?<access>.*?)\s*STATUS\s*(?<status>.*?)\s*DESCRIPTION\s*\""(?<description>.*?)\""?\s*::=\s*[{]\s*(?<parent>.*?)\s*(?=\d)(?<id>.*?)\s*[}]";
 
             // Regex: SEQUENCE (name,values)
             string pattern_Sequence = @"(?<name>\w*)\s*\:\:\=\s*(?<sequence>SEQUENCE)\s*\{(?<values>.*?)\s*[}]";
 
             // Regex: OBJECT IDENTIFIER (name, parent, oid)
-            string pattern_ObjectIdentifier = @"^(?<name>\w*)\s*(?<oi>OBJECT\sIDENTIFIER)\s\:\:\=\s\{\s(?<parent>\S*)\s(?<oid>\d)\s\}$";
+            string pattern_ObjectIdentifier = @"^(?<name>\w*)\s*(?<oi>OBJECT\sIDENTIFIER)\s\:\:\=\s\{\s(?<parent>\S*)\s(?<oid>\d)\s\}";
+            //@"^(?<name>\w*)\s*(?<oi>OBJECT\sIDENTIFIER)\s\:\:\=\s\{\s(?<parent>\S*)\s(?<oid>\d)\s\}$";
 
             // Opens a text file, reads all lines of the file into a string, and then closes the file.
-            string path_input = @"D:\RFC1213-MIB.txt";
+            string path_input = @"C:\RFC\RFC1213-MIB.txt";
             //string path_input = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"RFC1213-MIB.txt");
 
             //string path_output = @"D:\output_test.txt";
@@ -48,12 +50,10 @@ namespace ZSK_Projekt.SMIParser
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("The file is not found in the specified location");
-                Environment.Exit(2);
+                 Environment.Exit(2);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
                 Environment.Exit(2);
             }
 
