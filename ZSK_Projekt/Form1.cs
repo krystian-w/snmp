@@ -59,7 +59,7 @@ namespace ZSK_Projekt
                 txtStatus.Text = "";
                 txtMin.Text = "";
                 txtMax.Text = "";
-
+                txtValues.Text = "";
                 
                 // name ; oid ; syntax ; access ; status ; min ; max
                 txtName.Text = parser.displayText(treeView1.SelectedNode.Text.ToString(),"name");
@@ -69,6 +69,7 @@ namespace ZSK_Projekt
                 txtStatus.Text = parser.displayText(treeView1.SelectedNode.Text.ToString(), "status");
                 txtMin.Text = (Int32.Parse(parser.displayText(treeView1.SelectedNode.Text, "min")) == -1) ? "" : parser.displayText(treeView1.SelectedNode.Text.ToString(), "min");
                 txtMax.Text = (Int32.Parse(parser.displayText(treeView1.SelectedNode.Text, "max")) == -1) ? "" : parser.displayText(treeView1.SelectedNode.Text.ToString(), "max");
+                txtValues.Text = parser.displayText(treeView1.SelectedNode.Text.ToString(), "values");
             }
             catch { }
 
@@ -76,10 +77,93 @@ namespace ZSK_Projekt
 
         private void btnEncode_Click(object sender, EventArgs e)
         {
-            ASN1Type ANS1Integer = ASN1Type.Integer;
-            int value = (int)ANS1Integer;
-            txtBer.Text = string.Format("{0:x}", value);
-            //txtBer.Text = string.Format("{0:x}", Int32.Parse(txtBerSyntax.Text));
+            BERCoder(txtOID.Text, txtValue.Text);
+        }
+
+        public void BERCoder(string OID, string value)
+        {
+            foreach (var MIB in parser.MIBObjects)
+            {
+                ASN1Type asn1type;
+                
+                if (MIB.oID == OID)
+                {
+                    // Kodowanie pola TAG
+                        int TAG = 0;
+                        // Encode INTEGER (2)
+                        if (MIB.syntax == "INTEGER")
+                        {
+                            asn1type = ASN1Type.Integer;
+                            TAG = TAG + (int)asn1type;
+                        }
+
+                        // Encode OCTET STRING (4)
+                        if (MIB.syntax == "OCTET STRING" || MIB.syntax == "DisplayString" || MIB.syntax == "PhysAddress")
+                        {
+                            asn1type = ASN1Type.OctetString;
+                            TAG = TAG + (int)asn1type;
+                        }
+
+                        // Encode OBJECT IDENTIFIER (6)
+                        if (MIB.syntax == "OBJECT IDENTIFIER")
+                        {
+                            asn1type = ASN1Type.ObjectIdentifier;
+                            TAG = TAG + (int)asn1type;
+                        }
+
+                        // Encode IpAddress (64)
+                        if (MIB.syntax == "IpAddress")
+                        {
+                            asn1type = ASN1Type.IpAddress;
+                            TAG = TAG + (int)asn1type;
+                        }
+
+                        // Encode Counter (65)
+                        if (MIB.syntax == "Counter")
+                        {
+                            asn1type = ASN1Type.Counter;
+                            TAG = TAG + (int)asn1type;
+                        }
+
+                        // encode Gauge (66)
+                        if (MIB.syntax == "Gauge")
+                        {
+                            asn1type = ASN1Type.Gauge;
+                            TAG = TAG + (int)asn1type;
+                        }
+
+                        // Encode TimeTicks (67)
+                        if (MIB.syntax == "TimeTicks")
+                        {
+                            asn1type = ASN1Type.TimeTicks;
+                            TAG = TAG + (int)asn1type;
+                        }
+
+                        //txtBer.Text = TAG.ToString();
+                         string strTAG = string.Format("{0:x2}", TAG).ToString();
+
+                    // Kodowanie pola LENGTH
+                        int LENGTH = 0;
+                        // Sprawdzenie rozmiaru wartości
+                        //int size = value.Length * sizeof(Char);
+                        int size = System.Text.ASCIIEncoding.ASCII.GetByteCount(value); // Sparwdzenie długości                      
+                                                                                        // Zamiana wartosci na HEX:
+                        byte[] byteValue = Encoding.Default.GetBytes(value);
+                        var hexValue = BitConverter.ToString(byteValue);
+                        hexValue = hexValue.Replace("-", "");
+
+                        if (size < 127)
+                        {
+                            LENGTH = size;
+                        }
+                        else
+                        {
+                        }
+                    string strLENGTH = string.Format("{0:x2}", LENGTH).ToString();
+
+                    txtBer.Text = string.Concat(strTAG, strLENGTH, hexValue);
+                }
+            }
         }
     }
 }

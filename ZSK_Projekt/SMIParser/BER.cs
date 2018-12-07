@@ -24,10 +24,12 @@ namespace ZSK_Projekt.SMIParser
         Sequence = 16,
 
         // APPLICATION
-        ipAddress = 64,         //  IpAddress   ::=     [APPLICATION 0]     IMPLICIT OCTET STRING (SIZE (4))
+        IpAddress = 64,         //  IpAddress   ::=     [APPLICATION 0]     IMPLICIT OCTET STRING (SIZE (4))
         Counter = 65,           //  Counter     ::=     [APPLICATION 1]     IMPLICIT INTEGER (0..4294967295)
         Gauge = 66,             //  Gauge       ::=     [APPLICATION 2]     IMPLICIT INTEGER (0..4294967295)
-        Timeticks = 67,         //  TimeTicks   ::=     [APPLICATION 3]     IMPLICIT INTEGER (0..4294967295)
+        TimeTicks = 67,         //  TimeTicks   ::=     [APPLICATION 3]     IMPLICIT INTEGER (0..4294967295)
         Opaque = 68             //  Opaque      ::=     [APPLICATION 4]     IMPLICIT OCTET STRING
     }
+
+
 }

@@ -12,7 +12,7 @@ namespace ZSK_Projekt.SMIParser
 {
     class Parser
     {
-        List<MIBObjectType> MIBObjects = new List<MIBObjectType>(); // OBJECT-TYPE list
+        public List<MIBObjectType> MIBObjects = new List<MIBObjectType>(); // OBJECT-TYPE list
         List<MIBSequence> MIBSequences = new List<MIBSequence>();   // SEQUENCE list
 
         public Parser()
@@ -125,6 +125,13 @@ namespace ZSK_Projekt.SMIParser
                     if (value == "status") return mib.status;
                     if (value == "min") return mib.min.ToString();
                     if (value == "max") return mib.max.ToString();
+                    string values = "";
+                    foreach (var list in mib.listValues)
+                    {
+                        values = String.Concat(values,list.name,"\t",list.value.ToString(),"\r\n");
+                    }
+              
+                    if (value == "values") return values;
                 }
             }
             return "";

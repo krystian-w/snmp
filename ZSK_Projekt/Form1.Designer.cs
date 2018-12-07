@@ -45,26 +45,14 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtBerMax = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtBerMin = new System.Windows.Forms.TextBox();
-            this.txtBerStatus = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.txtBerAccess = new System.Windows.Forms.TextBox();
-            this.txtBerSyntax = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtBerOID = new System.Windows.Forms.TextBox();
-            this.txtBerName = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
+            this.txtValue = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
-            this.txtBer = new System.Windows.Forms.TextBox();
+            this.txtValues = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnEncode = new System.Windows.Forms.Button();
+            this.btnDecode = new System.Windows.Forms.Button();
+            this.txtBer = new System.Windows.Forms.TextBox();
             this.gbxNodeInfo.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView1
@@ -88,12 +76,14 @@
             this.gbxNodeInfo.Controls.Add(this.label6);
             this.gbxNodeInfo.Controls.Add(this.label7);
             this.gbxNodeInfo.Controls.Add(this.txtOID);
+            this.gbxNodeInfo.Controls.Add(this.txtValue);
             this.gbxNodeInfo.Controls.Add(this.txtName);
+            this.gbxNodeInfo.Controls.Add(this.label14);
             this.gbxNodeInfo.Controls.Add(this.label2);
             this.gbxNodeInfo.Controls.Add(this.label1);
             this.gbxNodeInfo.Location = new System.Drawing.Point(266, 10);
             this.gbxNodeInfo.Name = "gbxNodeInfo";
-            this.gbxNodeInfo.Size = new System.Drawing.Size(368, 235);
+            this.gbxNodeInfo.Size = new System.Drawing.Size(368, 363);
             this.gbxNodeInfo.TabIndex = 1;
             this.gbxNodeInfo.TabStop = false;
             this.gbxNodeInfo.Text = "Selected Node Information";
@@ -218,149 +208,30 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Name:";
             // 
-            // groupBox1
+            // txtValue
             // 
-            this.groupBox1.Controls.Add(this.txtBerMax);
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.txtBerMin);
-            this.groupBox1.Controls.Add(this.txtBerStatus);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.txtBerAccess);
-            this.groupBox1.Controls.Add(this.txtBerSyntax);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.txtBerOID);
-            this.groupBox1.Controls.Add(this.txtBerName);
-            this.groupBox1.Controls.Add(this.label13);
-            this.groupBox1.Controls.Add(this.label14);
-            this.groupBox1.Location = new System.Drawing.Point(628, 10);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(368, 235);
-            this.groupBox1.TabIndex = 16;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Data to encode";
-            // 
-            // txtBerMax
-            // 
-            this.txtBerMax.Location = new System.Drawing.Point(97, 183);
-            this.txtBerMax.Name = "txtBerMax";
-            this.txtBerMax.Size = new System.Drawing.Size(236, 20);
-            this.txtBerMax.TabIndex = 15;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(66, 187);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(30, 13);
-            this.label8.TabIndex = 14;
-            this.label8.Text = "Max:";
-            // 
-            // txtBerMin
-            // 
-            this.txtBerMin.Location = new System.Drawing.Point(97, 157);
-            this.txtBerMin.Name = "txtBerMin";
-            this.txtBerMin.Size = new System.Drawing.Size(236, 20);
-            this.txtBerMin.TabIndex = 13;
-            // 
-            // txtBerStatus
-            // 
-            this.txtBerStatus.Location = new System.Drawing.Point(97, 130);
-            this.txtBerStatus.Name = "txtBerStatus";
-            this.txtBerStatus.Size = new System.Drawing.Size(236, 20);
-            this.txtBerStatus.TabIndex = 12;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(67, 161);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(27, 13);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "Min:";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(56, 134);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(40, 13);
-            this.label10.TabIndex = 10;
-            this.label10.Text = "Status:";
-            // 
-            // txtBerAccess
-            // 
-            this.txtBerAccess.Location = new System.Drawing.Point(97, 104);
-            this.txtBerAccess.Name = "txtBerAccess";
-            this.txtBerAccess.Size = new System.Drawing.Size(236, 20);
-            this.txtBerAccess.TabIndex = 9;
-            // 
-            // txtBerSyntax
-            // 
-            this.txtBerSyntax.Location = new System.Drawing.Point(97, 77);
-            this.txtBerSyntax.Name = "txtBerSyntax";
-            this.txtBerSyntax.Size = new System.Drawing.Size(236, 20);
-            this.txtBerSyntax.TabIndex = 8;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(51, 108);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(45, 13);
-            this.label11.TabIndex = 7;
-            this.label11.Text = "Access:";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(54, 81);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(42, 13);
-            this.label12.TabIndex = 6;
-            this.label12.Text = "Syntax:";
-            // 
-            // txtBerOID
-            // 
-            this.txtBerOID.Location = new System.Drawing.Point(97, 51);
-            this.txtBerOID.Name = "txtBerOID";
-            this.txtBerOID.Size = new System.Drawing.Size(236, 20);
-            this.txtBerOID.TabIndex = 5;
-            // 
-            // txtBerName
-            // 
-            this.txtBerName.Location = new System.Drawing.Point(97, 24);
-            this.txtBerName.Name = "txtBerName";
-            this.txtBerName.Size = new System.Drawing.Size(236, 20);
-            this.txtBerName.TabIndex = 4;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(65, 55);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(29, 13);
-            this.label13.TabIndex = 1;
-            this.label13.Text = "OID:";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.txtValue.Location = new System.Drawing.Point(97, 209);
+            this.txtValue.Name = "txtValue";
+            this.txtValue.Size = new System.Drawing.Size(236, 20);
+            this.txtValue.TabIndex = 4;
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(57, 28);
+            this.label14.Location = new System.Drawing.Point(57, 213);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(38, 13);
+            this.label14.Size = new System.Drawing.Size(37, 13);
             this.label14.TabIndex = 0;
-            this.label14.Text = "Name:";
+            this.label14.Text = "Value:";
             // 
-            // txtBer
+            // txtValues
             // 
-            this.txtBer.Location = new System.Drawing.Point(628, 251);
-            this.txtBer.Multiline = true;
-            this.txtBer.Name = "txtBer";
-            this.txtBer.Size = new System.Drawing.Size(368, 299);
-            this.txtBer.TabIndex = 17;
+            this.txtValues.Location = new System.Drawing.Point(363, 250);
+            this.txtValues.Multiline = true;
+            this.txtValues.Name = "txtValues";
+            this.txtValues.ReadOnly = true;
+            this.txtValues.Size = new System.Drawing.Size(236, 117);
+            this.txtValues.TabIndex = 17;
             // 
             // contextMenuStrip1
             // 
@@ -370,22 +241,40 @@
             // 
             // btnEncode
             // 
-            this.btnEncode.Location = new System.Drawing.Point(267, 252);
+            this.btnEncode.Location = new System.Drawing.Point(266, 379);
             this.btnEncode.Name = "btnEncode";
-            this.btnEncode.Size = new System.Drawing.Size(75, 23);
+            this.btnEncode.Size = new System.Drawing.Size(179, 23);
             this.btnEncode.TabIndex = 19;
-            this.btnEncode.Text = "button1";
+            this.btnEncode.Text = "Encode";
             this.btnEncode.UseVisualStyleBackColor = true;
             this.btnEncode.Click += new System.EventHandler(this.btnEncode_Click);
+            // 
+            // btnDecode
+            // 
+            this.btnDecode.Location = new System.Drawing.Point(455, 379);
+            this.btnDecode.Name = "btnDecode";
+            this.btnDecode.Size = new System.Drawing.Size(179, 23);
+            this.btnDecode.TabIndex = 20;
+            this.btnDecode.Text = "Decode";
+            this.btnDecode.UseVisualStyleBackColor = true;
+            // 
+            // txtBer
+            // 
+            this.txtBer.Location = new System.Drawing.Point(266, 407);
+            this.txtBer.Multiline = true;
+            this.txtBer.Name = "txtBer";
+            this.txtBer.Size = new System.Drawing.Size(368, 142);
+            this.txtBer.TabIndex = 21;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 561);
-            this.Controls.Add(this.btnEncode);
+            this.ClientSize = new System.Drawing.Size(643, 561);
             this.Controls.Add(this.txtBer);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.btnDecode);
+            this.Controls.Add(this.btnEncode);
+            this.Controls.Add(this.txtValues);
             this.Controls.Add(this.gbxNodeInfo);
             this.Controls.Add(this.treeView1);
             this.Name = "Form1";
@@ -393,8 +282,6 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.gbxNodeInfo.ResumeLayout(false);
             this.gbxNodeInfo.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -418,24 +305,13 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtMax;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox txtBerMax;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtBerMin;
-        private System.Windows.Forms.TextBox txtBerStatus;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox txtBerAccess;
-        private System.Windows.Forms.TextBox txtBerSyntax;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox txtBerOID;
-        private System.Windows.Forms.TextBox txtBerName;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtValue;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox txtBer;
+        private System.Windows.Forms.TextBox txtValues;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Button btnEncode;
+        private System.Windows.Forms.Button btnDecode;
+        private System.Windows.Forms.TextBox txtBer;
     }
 }
 

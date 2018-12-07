@@ -49,7 +49,8 @@ namespace ZSK_Projekt.SMIParser
             else if (match_values.Success == true)
             {
                 syntax = match_values.Groups[2].Value.Replace("\n", "");
-                string pattern_stringint = @"(?<word>\w*)\((?<number>\d*)\)";
+              //string pattern_stringint = @"(?<word>\w*)\((?<number>\d*)\)";
+                string pattern_stringint = @"(?<word>[a-z-]*)\((?<number>\d*)\)";
                 foreach (Match stringint in Regex.Matches(Syntax, pattern_stringint, options))
                 {
                     string ValueString = stringint.Groups[1].Value.Replace("\n", "");
