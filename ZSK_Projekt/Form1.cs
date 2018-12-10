@@ -84,86 +84,143 @@ namespace ZSK_Projekt
         {
             foreach (var MIB in parser.MIBObjects)
             {
-                ASN1Type asn1type;
-                
                 if (MIB.oID == OID)
                 {
                     // Kodowanie pola TAG
-                        int TAG = 0;
-                        // Encode INTEGER (2)
-                        if (MIB.syntax == "INTEGER")
-                        {
-                            asn1type = ASN1Type.Integer;
-                            TAG = TAG + (int)asn1type;
-                        }
-
-                        // Encode OCTET STRING (4)
-                        if (MIB.syntax == "OCTET STRING" || MIB.syntax == "DisplayString" || MIB.syntax == "PhysAddress")
-                        {
-                            asn1type = ASN1Type.OctetString;
-                            TAG = TAG + (int)asn1type;
-                        }
-
-                        // Encode OBJECT IDENTIFIER (6)
-                        if (MIB.syntax == "OBJECT IDENTIFIER")
-                        {
-                            asn1type = ASN1Type.ObjectIdentifier;
-                            TAG = TAG + (int)asn1type;
-                        }
-
-                        // Encode IpAddress (64)
-                        if (MIB.syntax == "IpAddress")
-                        {
-                            asn1type = ASN1Type.IpAddress;
-                            TAG = TAG + (int)asn1type;
-                        }
-
-                        // Encode Counter (65)
-                        if (MIB.syntax == "Counter")
-                        {
-                            asn1type = ASN1Type.Counter;
-                            TAG = TAG + (int)asn1type;
-                        }
-
-                        // encode Gauge (66)
-                        if (MIB.syntax == "Gauge")
-                        {
-                            asn1type = ASN1Type.Gauge;
-                            TAG = TAG + (int)asn1type;
-                        }
-
-                        // Encode TimeTicks (67)
-                        if (MIB.syntax == "TimeTicks")
-                        {
-                            asn1type = ASN1Type.TimeTicks;
-                            TAG = TAG + (int)asn1type;
-                        }
-
-                        //txtBer.Text = TAG.ToString();
-                         string strTAG = string.Format("{0:x2}", TAG).ToString();
+                    int TAG = 0;
+                    TAG = returnTAG(MIB);               
+                    // Zamiana TAG na HEX
+                    string strTAG = string.Format("{0:x2}", TAG).ToString();
 
                     // Kodowanie pola LENGTH
-                        int LENGTH = 0;
-                        // Sprawdzenie rozmiaru wartości
-                        //int size = value.Length * sizeof(Char);
-                        int size = System.Text.ASCIIEncoding.ASCII.GetByteCount(value); // Sparwdzenie długości                      
-                                                                                        // Zamiana wartosci na HEX:
-                        byte[] byteValue = Encoding.Default.GetBytes(value);
-                        var hexValue = BitConverter.ToString(byteValue);
-                        hexValue = hexValue.Replace("-", "");
+                    int LENGTH = 0;
 
-                        if (size < 127)
+                    // Zamiana wartosci na HEX:
+                    string hexValue;
+                    if (MIB.syntax == "INTEGER") // Jeżeli INTEGER
+                    {
+                        int intValue;
+                        if (value.StartsWith("-")) // jeżeli liczba jest ujemna
                         {
-                            LENGTH = size;
+                            string valueRemoveFirstChar = value.Remove(0, 1);       // usuń '-' na początku
+                            intValue = Int32.Parse(valueRemoveFirstChar) * -1;      // zamień string na liczbę ujemną
+                            hexValue = Convert.ToString(intValue, 16);              // przedstawienie wartości jako HEX
+                            LENGTH = returnPOW(valueRemoveFirstChar);               // Szukanie ilości Bajtów dla danej wartości
+                            hexValue = hexValue.Substring(hexValue.Length - LENGTH*2, LENGTH*2);
                         }
-                        else
-                        {
-                        }
+                        else // jeżeli liczba jest dodatnia
+                        { 
+                            intValue = Int32.Parse(value);
+                            hexValue = Convert.ToString(intValue, 16);          // przedstawienie wartości jako HEX
+                            LENGTH = returnPOW(value);                          // Szukanie ilości Bajtów dla danej wartości
+                            int testWartosci = LENGTH;
+                        }                     
+                        String hexValue_temp = new String(new char[LENGTH * 2]).Replace('\0', '0'); // Stworzenie stringa wypełnionego '0' o danej długości
+                        int ileDoUsuniecia = System.Text.ASCIIEncoding.ASCII.GetByteCount(hexValue); // Ile ostatnich znaków do usunięcia, które mają być nadpisane przez nową wartość
+                        hexValue_temp = hexValue_temp.Remove(hexValue_temp.Length - ileDoUsuniecia, ileDoUsuniecia) + hexValue; // Utworzenie końcowej wartości w HEX
+                        hexValue = hexValue_temp;
+                    }
+                    else if(MIB.syntax == "OCTET STRING" || MIB.syntax == "DisplayString" || MIB.syntax == "PhysAddress")
+                    {
+                        byte[] byteValue = Encoding.Default.GetBytes(value);
+                        hexValue = BitConverter.ToString(byteValue);
+                        hexValue = hexValue.Replace("-", "");
+                        LENGTH = System.Text.ASCIIEncoding.ASCII.GetByteCount(value); // Sparwdzenie długości      
+                    }
+                    else
+                    {
+                        // todo pozostałe typy
+                        LENGTH = 0;
+                        hexValue = "0";
+                    }
                     string strLENGTH = string.Format("{0:x2}", LENGTH).ToString();
 
+                    // kodowanie OID
+                    string codedOID = coderOID(MIB);
+
+                    // Wyświetlenie zakodowanego ciągu:
                     txtBer.Text = string.Concat(strTAG, strLENGTH, hexValue);
                 }
             }
+        }
+
+        public int returnTAG(MIBObjectType MIB)
+        {
+            ASN1Type asn1type;
+            int TAG = 0;
+            // Encode INTEGER (2)
+            if (MIB.syntax == "INTEGER")
+            {
+                asn1type = ASN1Type.Integer;
+                TAG = TAG + (int)asn1type;
+            }
+
+            // Encode OCTET STRING (4)
+            if (MIB.syntax == "OCTET STRING" || MIB.syntax == "DisplayString" || MIB.syntax == "PhysAddress")
+            {
+                asn1type = ASN1Type.OctetString;
+                TAG = TAG + (int)asn1type;
+            }
+
+            // Encode OBJECT IDENTIFIER (6)
+            if (MIB.syntax == "OBJECT IDENTIFIER")
+            {
+                asn1type = ASN1Type.ObjectIdentifier;
+                TAG = TAG + (int)asn1type;
+            }
+
+            // Encode IpAddress (64)
+            if (MIB.syntax == "IpAddress")
+            {
+                asn1type = ASN1Type.IpAddress;
+                TAG = TAG + (int)asn1type;
+            }
+
+            // Encode Counter (65)
+            if (MIB.syntax == "Counter")
+            {
+                asn1type = ASN1Type.Counter;
+                TAG = TAG + (int)asn1type;
+            }
+
+            // encode Gauge (66)
+            if (MIB.syntax == "Gauge")
+            {
+                asn1type = ASN1Type.Gauge;
+                TAG = TAG + (int)asn1type;
+            }
+
+            // Encode TimeTicks (67)
+            if (MIB.syntax == "TimeTicks")
+            {
+                asn1type = ASN1Type.TimeTicks;
+                TAG = TAG + (int)asn1type;
+            }
+
+            return TAG;
+
+        }
+
+        public int returnPOW(string v)
+        {
+            int n = 1;
+            while (true)
+            {
+                int intValue = Int32.Parse(v);
+                int powValue = (int)Math.Pow(2, (7 * n));
+                if (intValue < powValue)
+                {
+                    return n;
+                }
+                n++;
+            }
+        }
+
+        public string coderOID(MIBObjectType MIB)
+        {
+            string oID = MIB.oID;
+
+            return oID;
         }
     }
 }

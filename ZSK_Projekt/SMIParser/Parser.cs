@@ -37,8 +37,8 @@ namespace ZSK_Projekt.SMIParser
             //@"^(?<name>\w*)\s*(?<oi>OBJECT\sIDENTIFIER)\s\:\:\=\s\{\s(?<parent>\S*)\s(?<oid>\d)\s\}$";
 
             // Opens a text file, reads all lines of the file into a string, and then closes the file.
-            string path_input = @"C:\RFC\RFC1213-MIB.txt";
-            //string path_input = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"RFC1213-MIB.txt");
+            string path_input = @"C:\Users\Krystian\Source\Repos\krystian-w\snmp\ZSK_Projekt\RFC1213-MIB.txt";
+
 
             //string path_output = @"D:\output_test.txt";
             //File.WriteAllText(path_output, String.Empty);
@@ -149,27 +149,5 @@ namespace ZSK_Projekt.SMIParser
             }
             return "";
         }
-
-        /*
-        public void CreateSMITreeViewDetails(ref List<TreeNode> list, string name)
-        {
-            foreach (var mib in MIBObjects)
-            {
-                if (mib.name == name)
-                {
-                    
-                    list.Add(new TreeNode(mib.syntax));
-                    
-                    list.Add(new TreeNode(mib.access));
-                    list.Add(new TreeNode(mib.status));
-                    if (mib.valMin != -1) list.Add(new TreeNode(mib.valMin.ToString()));
-                    if (mib.valMax != -1) list.Add(new TreeNode(mib.valMax.ToString()));
-                    if (mib.charMin != -1) list.Add(new TreeNode(mib.charMin.ToString()));
-                    if (mib.charMax != -1) list.Add(new TreeNode(mib.charMax.ToString()));
-                    
-                }
-            }
-        }
-        */
     }
 }
