@@ -70,6 +70,7 @@ namespace ZSK_Projekt.SMIParser
         {
             name = Name;
             access = "";
+            syntax = "";
             status = "";
             parent = Parent;
             oID = string.Concat("1.3.6.1.2.1.", OID);

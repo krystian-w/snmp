@@ -42,16 +42,17 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.txtOID = new System.Windows.Forms.TextBox();
+            this.txtValue = new System.Windows.Forms.TextBox();
             this.txtName = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtValue = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
             this.txtValues = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.btnEncode = new System.Windows.Forms.Button();
             this.btnDecode = new System.Windows.Forms.Button();
             this.txtBer = new System.Windows.Forms.TextBox();
+            this.txtBerOID = new System.Windows.Forms.TextBox();
             this.gbxNodeInfo.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -181,6 +182,13 @@
             this.txtOID.Size = new System.Drawing.Size(236, 20);
             this.txtOID.TabIndex = 5;
             // 
+            // txtValue
+            // 
+            this.txtValue.Location = new System.Drawing.Point(97, 209);
+            this.txtValue.Name = "txtValue";
+            this.txtValue.Size = new System.Drawing.Size(236, 20);
+            this.txtValue.TabIndex = 4;
+            // 
             // txtName
             // 
             this.txtName.Location = new System.Drawing.Point(97, 24);
@@ -188,6 +196,15 @@
             this.txtName.ReadOnly = true;
             this.txtName.Size = new System.Drawing.Size(236, 20);
             this.txtName.TabIndex = 4;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(57, 213);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(37, 13);
+            this.label14.TabIndex = 0;
+            this.label14.Text = "Value:";
             // 
             // label2
             // 
@@ -207,22 +224,6 @@
             this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Name:";
-            // 
-            // txtValue
-            // 
-            this.txtValue.Location = new System.Drawing.Point(97, 209);
-            this.txtValue.Name = "txtValue";
-            this.txtValue.Size = new System.Drawing.Size(236, 20);
-            this.txtValue.TabIndex = 4;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(57, 213);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(37, 13);
-            this.label14.TabIndex = 0;
-            this.label14.Text = "Value:";
             // 
             // txtValues
             // 
@@ -263,14 +264,23 @@
             this.txtBer.Location = new System.Drawing.Point(266, 407);
             this.txtBer.Multiline = true;
             this.txtBer.Name = "txtBer";
-            this.txtBer.Size = new System.Drawing.Size(368, 142);
+            this.txtBer.Size = new System.Drawing.Size(368, 106);
             this.txtBer.TabIndex = 21;
+            // 
+            // txtBerOID
+            // 
+            this.txtBerOID.Location = new System.Drawing.Point(266, 519);
+            this.txtBerOID.Multiline = true;
+            this.txtBerOID.Name = "txtBerOID";
+            this.txtBerOID.Size = new System.Drawing.Size(368, 31);
+            this.txtBerOID.TabIndex = 22;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(643, 561);
+            this.Controls.Add(this.txtBerOID);
             this.Controls.Add(this.txtBer);
             this.Controls.Add(this.btnDecode);
             this.Controls.Add(this.btnEncode);
@@ -312,6 +322,7 @@
         private System.Windows.Forms.Button btnEncode;
         private System.Windows.Forms.Button btnDecode;
         private System.Windows.Forms.TextBox txtBer;
+        private System.Windows.Forms.TextBox txtBerOID;
     }
 }
 

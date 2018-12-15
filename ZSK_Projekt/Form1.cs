@@ -59,6 +59,7 @@ namespace ZSK_Projekt
                 txtStatus.Text = "";
                 txtMin.Text = "";
                 txtMax.Text = "";
+                txtValue.Text = "";
                 txtValues.Text = "";
                 
                 // name ; oid ; syntax ; access ; status ; min ; max
@@ -82,8 +83,17 @@ namespace ZSK_Projekt
 
         public void BERCoder(string OID, string value)
         {
+            // Jeżeli pusta wartość
+            if (value == "")
+            {
+                txtBer.Text = "Empty Value";
+                return;
+            }
+
             foreach (var MIB in parser.MIBObjects)
             {
+                // Jeżeli pusty syntax
+
                 if (MIB.oID == OID)
                 {
                     // Kodowanie pola TAG
@@ -97,7 +107,7 @@ namespace ZSK_Projekt
 
                     // Zamiana wartosci na HEX:
                     string hexValue;
-                    if (MIB.syntax == "INTEGER") // Jeżeli INTEGER
+                    if (MIB.syntax == "INTEGER" || MIB.syntax == "TimeTicks") // Jeżeli INTEGER
                     {
                         int intValue;
                         if (value.StartsWith("-")) // jeżeli liczba jest ujemna
@@ -120,7 +130,8 @@ namespace ZSK_Projekt
                         hexValue_temp = hexValue_temp.Remove(hexValue_temp.Length - ileDoUsuniecia, ileDoUsuniecia) + hexValue; // Utworzenie końcowej wartości w HEX
                         hexValue = hexValue_temp;
                     }
-                    else if(MIB.syntax == "OCTET STRING" || MIB.syntax == "DisplayString" || MIB.syntax == "PhysAddress")
+                    //else if(MIB.syntax == "OCTET STRING" || MIB.syntax == "DisplayString" || MIB.syntax == "PhysAddress")
+                    else if(MIB.syntax.StartsWith("SEQUENCE OF") == false)
                     {
                         byte[] byteValue = Encoding.Default.GetBytes(value);
                         hexValue = BitConverter.ToString(byteValue);
@@ -129,9 +140,9 @@ namespace ZSK_Projekt
                     }
                     else
                     {
-                        // todo pozostałe typy
+                        // todo pozostałe typy, SEQUENCE OF nie obsługiwane
                         LENGTH = 0;
-                        hexValue = "0";
+                        hexValue = "NOT IMPLEMENTED";
                     }
                     string strLENGTH = string.Format("{0:x2}", LENGTH).ToString();
 
@@ -140,6 +151,7 @@ namespace ZSK_Projekt
 
                     // Wyświetlenie zakodowanego ciągu:
                     txtBer.Text = string.Concat(strTAG, strLENGTH, hexValue);
+                    txtBerOID.Text = codedOID;
                 }
             }
         }
@@ -219,8 +231,24 @@ namespace ZSK_Projekt
         public string coderOID(MIBObjectType MIB)
         {
             string oID = MIB.oID;
-
-            return oID;
+            if(oID.StartsWith("1.3.") == true)
+            {
+                // Usunięcie 1.3.
+                oID = oID.Remove(0, 4);
+                // Z = 40*x + y = 43, gdzie x = iso(1), y = org(3)
+                string hexOID = "2B";
+                // Zamiana na listę wartości
+                string[] parts = oID.Split('.'); // Call Split method
+                List<string> list = new List<string>(parts); // Use List constructor
+                foreach (string item in list)
+                {
+                    // Konwerrtowanie do HEX
+                    string hexValue = string.Format("{0:X2}", Int32.Parse(item)).ToString();
+                    hexOID = String.Concat(hexOID, " ", hexValue);
+                }
+                return hexOID;
+            }
+            return "NOT VALID";
         }
     }
 }
