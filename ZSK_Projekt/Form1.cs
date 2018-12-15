@@ -106,7 +106,7 @@ namespace ZSK_Projekt
                     int LENGTH = 0;
 
                     // Zamiana wartosci na HEX:
-                    string hexValue;
+                    string hexValue = "";
                     if (MIB.syntax == "INTEGER" || MIB.syntax == "TimeTicks") // Jeżeli INTEGER
                     {
                         int intValue;
@@ -130,8 +130,12 @@ namespace ZSK_Projekt
                         hexValue_temp = hexValue_temp.Remove(hexValue_temp.Length - ileDoUsuniecia, ileDoUsuniecia) + hexValue; // Utworzenie końcowej wartości w HEX
                         hexValue = hexValue_temp;
                     }
-                    //else if(MIB.syntax == "OCTET STRING" || MIB.syntax == "DisplayString" || MIB.syntax == "PhysAddress")
-                    else if(MIB.syntax.StartsWith("SEQUENCE OF") == false)
+                    else if(MIB.syntax == "OBJECT IDENTIFIER")
+                    {
+                        LENGTH = System.Text.ASCIIEncoding.ASCII.GetByteCount(value); // Sparwdzenie długości  
+                        hexValue = coderOID(value);
+                    }
+                    else if (MIB.syntax.StartsWith("SEQUENCE OF") == false)
                     {
                         byte[] byteValue = Encoding.Default.GetBytes(value);
                         hexValue = BitConverter.ToString(byteValue);
@@ -147,7 +151,7 @@ namespace ZSK_Projekt
                     string strLENGTH = string.Format("{0:x2}", LENGTH).ToString();
 
                     // kodowanie OID
-                    string codedOID = coderOID(MIB);
+                    string codedOID = coderOID(MIB.oID);
 
                     // Wyświetlenie zakodowanego ciągu:
                     txtBer.Text = string.Concat(strTAG, strLENGTH, hexValue);
@@ -228,9 +232,8 @@ namespace ZSK_Projekt
             }
         }
 
-        public string coderOID(MIBObjectType MIB)
+        public string coderOID(string oID)
         {
-            string oID = MIB.oID;
             if(oID.StartsWith("1.3.") == true)
             {
                 // Usunięcie 1.3.
@@ -244,7 +247,7 @@ namespace ZSK_Projekt
                 {
                     // Konwerrtowanie do HEX
                     string hexValue = string.Format("{0:X2}", Int32.Parse(item)).ToString();
-                    hexOID = String.Concat(hexOID, " ", hexValue);
+                    hexOID = String.Concat(hexOID, hexValue);
                 }
                 return hexOID;
             }
